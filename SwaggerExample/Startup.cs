@@ -12,6 +12,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using SwaggerExample.Helpers;
+using SwaggerExample.Options;
+using SwaggerExample.Services;
 
 namespace SwaggerExample
 {
@@ -79,6 +82,14 @@ namespace SwaggerExample
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+
+            // configure strongly typed settings object
+            services.Configure<JWTOptions>(Configuration.GetSection("JWTOptions"));
+
+            // configure DI for application services
+            services.AddScoped<IUserService, UserService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,6 +116,16 @@ namespace SwaggerExample
             app.UseRouting();
 
             app.UseAuthorization();
+
+
+            // global cors policy
+            //app.UseCors(x => x
+            //    .AllowAnyOrigin()
+            //    .AllowAnyMethod()
+            //    .AllowAnyHeader());
+
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

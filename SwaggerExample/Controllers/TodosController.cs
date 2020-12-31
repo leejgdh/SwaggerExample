@@ -2,7 +2,7 @@ using System;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SwaggerExample.Models.DTO.Todo;
+using SwaggerExample.Models.DTO.Todos;
 
 namespace SwaggerExample.Controllers
 {

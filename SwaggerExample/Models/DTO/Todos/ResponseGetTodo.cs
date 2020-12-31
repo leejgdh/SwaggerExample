@@ -4,20 +4,12 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using SwaggerExample.Models.Enums;
 
-namespace SwaggerExample.Models.DTO.Todo
+namespace SwaggerExample.Models.DTO.Todos
 {
-    public class ResponseCreateTodo
+    public class ResponseGetTodo
     {
-        public ResponseCreateTodo()
+        public ResponseGetTodo()
         {
-        }
-
-        public ResponseCreateTodo(RequestCreateTodo req)
-        {
-            Id = Guid.NewGuid();
-            Title = req.Title;
-            Content = req.Content;
-            CreatedAt = DateTime.Now;
         }
 
         /// <summary>
@@ -37,7 +29,7 @@ namespace SwaggerExample.Models.DTO.Todo
         /// <summary>
         /// 본문
         /// </summary>
-        /// <example>본문</example>
+        /// <example>본문 컨텐츠 입력</example>
         [Display(Name = "본문")]
         public string Content { get; set; }
 
@@ -58,5 +50,14 @@ namespace SwaggerExample.Models.DTO.Todo
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
         public DateTime CreatedAt { get; set; }
+
+        /// <summary>
+        /// 수정일
+        /// </summary>
+        /// <example>2020-01-02</example>
+        [Display(Name = "수정일")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
+        [DataType(DataType.Date)]
+        public DateTime UpdatedAt { get; set; }
     }
 }

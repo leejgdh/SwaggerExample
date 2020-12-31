@@ -11,12 +11,20 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.9" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
     <Folder Include="Models\DTO\" />
-    <Folder Include="Models\DTO\Todo\" />
+    <Folder Include="Models\DTO\Todos\" />
     <Folder Include="Models\Enums\" />
+    <Folder Include="Models\DAO\" />
+    <Folder Include="Options\" />
+    <Folder Include="Attributes\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Models\DTO\Users\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 </Project>

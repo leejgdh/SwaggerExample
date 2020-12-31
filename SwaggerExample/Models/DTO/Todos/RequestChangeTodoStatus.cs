@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using SwaggerExample.Models.Enums;
 
-namespace SwaggerExample.Models.DTO.Todo
+namespace SwaggerExample.Models.DTO.Todos
 {
     public class RequestChangeTodoStatus
     {
