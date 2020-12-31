@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,7 @@ namespace SwaggerExample.Controllers
         /// </remarks>
         /// <param name="Id">Todo 고유값</param>
         /// <returns></returns>
+        /// <response code="200">정상</response>
         /// <response code="404">데이터를 찾을 수 없음</response>
         [HttpGet("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseGetTodo))]
@@ -32,7 +34,22 @@ namespace SwaggerExample.Controllers
         public IActionResult Get([FromRoute] Guid Id)
         {
 
-            var res = new ResponseUpdateTodo();
+            var res = new ResponseGetTodo();
+
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 여러개의 Todo항목을 가져옵니다.
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="200"></response>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ResponseGetTodo>))]
+        public IActionResult GetAll()
+        {
+
+            var res = new List<ResponseGetTodo>();
 
             return Ok(res);
         }
