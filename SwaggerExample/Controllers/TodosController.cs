@@ -12,7 +12,8 @@ namespace SwaggerExample.Controllers
     /// </summary>
     /// <response code="400">요청값이 잘못됨</response>
     /// <response code="500">Server Error</response>
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route ( "api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -119,6 +120,14 @@ namespace SwaggerExample.Controllers
         {
 
             return NoContent();
+        }
+
+
+
+        [HttpGet]
+        [ApiVersion("2.0")]
+        public IActionResult GetTodosV2(){
+            return Ok(true);
         }
     }
 }

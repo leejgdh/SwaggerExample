@@ -6,20 +6,33 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using SwaggerExample.Helpers;
 using SwaggerExample.Options;
 using SwaggerExample.Services;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SwaggerExample
 {
     public class Startup
     {
+        //Api Versioning
+        static string XmlCommentsFileName
+        {
+            get
+            {
+                var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";
+                return fileName;
+            }
+        }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -39,7 +52,8 @@ namespace SwaggerExample
                 options.SerializerSettings.Converters.Add(new StringEnumConverter());
 
             })
-            .AddJsonOptions(options => {
+            .AddJsonOptions(options =>
+            {
                 options.JsonSerializerOptions.PropertyNamingPolicy = null;
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 options.JsonSerializerOptions.IgnoreNullValues = true;
@@ -54,29 +68,12 @@ namespace SwaggerExample
                     return result;
                 };
             });
+            
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "ToDo API",
-                    Description = "Swagger를 이용한 기본 API 프로젝트 구조 정립",
-                    TermsOfService = new Uri("https://example.com/terms"),
-                    Contact = new OpenApiContact
-                    {
-                        Name = "Lee DH",
-                        Email = "leejgdh@hotmail.com",
-                        //Url = new Uri("https://twitter.com/spboyer"),
-                    },
-                    License = new OpenApiLicense
-                    {
-                        //Name = "Use under LICX",
-                        //Url = new Uri("https://example.com/license"),
-                    }
-                });
-
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
@@ -107,6 +104,25 @@ namespace SwaggerExample
                 c.IncludeXmlComments(xmlPath);
             });
 
+            //Api Versioning
+            services.AddApiVersioning( c =>
+                {
+                    // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
+                    c.ReportApiVersions = true;
+                }
+            );
+
+            //Api Versioning
+            services.AddVersionedApiExplorer( c => 
+                {
+                    // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
+                    // note: the specified format code will format the version as "'v'major[.minor][-status]"
+                    c.GroupNameFormat = "'v'VVV";
+                    // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
+                    // can also be used to control the format of the API version in route templates
+                    c.SubstituteApiVersionInUrl = true;
+                }
+            );
 
             // configure strongly typed settings object
             services.Configure<JWTOptions>(Configuration.GetSection("JWTOptions"));
@@ -117,7 +133,7 @@ namespace SwaggerExample
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -127,13 +143,19 @@ namespace SwaggerExample
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = string.Empty;
-            });
+            //Swagger Versioning
+            app.UseSwaggerUI(options =>
+                {
+                    // build a swagger endpoint for each discovered API version
+                    foreach (var description in provider.ApiVersionDescriptions)
+                    {
+                        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+                    }
+
+                    options.RoutePrefix = string.Empty;
+                }
+            );
+
 
             app.UseHttpsRedirection();
 
