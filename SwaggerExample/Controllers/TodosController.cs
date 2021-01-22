@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SwaggerExample.Models.DTO;
 using SwaggerExample.Models.DTO.Todos;
 
 namespace SwaggerExample.Controllers
@@ -25,6 +26,7 @@ namespace SwaggerExample.Controllers
         /// </summary>
         /// <remarks>
         /// </remarks>
+        /// <param name="header">Signature</param>
         /// <param name="Id">Todo 고유값</param>
         /// <returns></returns>
         /// <response code="200">정상</response>
@@ -32,7 +34,7 @@ namespace SwaggerExample.Controllers
         [HttpGet("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseGetTodo))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Get([FromRoute] Guid Id)
+        public IActionResult Get([FromHeader] Sign header, [FromRoute] Guid Id)
         {
 
             var res = new ResponseGetTodo();
