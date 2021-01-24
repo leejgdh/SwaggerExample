@@ -32,7 +32,7 @@ namespace SwaggerExample.Controllers
         /// <response code="200">정상</response>
         /// <response code="404">데이터를 찾을 수 없음</response>
         [HttpGet("{Id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResponseGetTodo))]
+        [ProducesResponseType(typeof(ResponseGetTodo), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Get([FromHeader] Sign header, [FromRoute] Guid Id)
         {
@@ -48,8 +48,8 @@ namespace SwaggerExample.Controllers
         /// <returns></returns>
         /// <response code="200"></response>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ResponseGetTodo>))]
-        public IActionResult GetAll()
+        [ProducesResponseType(typeof(List<ResponseGetTodo>),StatusCodes.Status200OK)]
+        public IActionResult List()
         {
 
             var res = new List<ResponseGetTodo>();
@@ -68,7 +68,7 @@ namespace SwaggerExample.Controllers
         /// <returns></returns>
         /// <response code="201">정상</response>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ResponseCreateTodo))]
+        [ProducesResponseType(typeof(ResponseCreateTodo), StatusCodes.Status201Created)]
         public IActionResult Create([FromBody] RequestCreateTodo req)
         {
 
@@ -85,7 +85,7 @@ namespace SwaggerExample.Controllers
         /// <returns></returns>
         /// <response code="202">업데이트 완료</response>
         [HttpPut]
-        [ProducesResponseType(StatusCodes.Status202Accepted, Type = typeof(ResponseUpdateTodo))]
+        [ProducesResponseType(typeof(ResponseUpdateTodo),StatusCodes.Status202Accepted)]
         public IActionResult Update([FromBody] RequestUpdateTodo req)
         {
 
@@ -103,6 +103,7 @@ namespace SwaggerExample.Controllers
         /// <response code="204">업데이트 완료</response>
         /// <response code="404">데이터를 찾을 수 없음</response>
         [HttpPatch("{Id}/Status")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult ChangeStatus([FromBody] RequestChangeTodoStatus req)
         {
 
@@ -118,6 +119,7 @@ namespace SwaggerExample.Controllers
         /// <response code="204">삭제 완료</response>
         /// <response code="404">데이터를 찾을 수 없음</response>
         [HttpDelete("{Id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Delete([FromRoute] Guid Id)
         {
 
@@ -128,8 +130,12 @@ namespace SwaggerExample.Controllers
 
         [HttpGet]
         [ApiVersion("2.0")]
-        public IActionResult GetTodosV2(){
-            return Ok(true);
+        [ProducesResponseType(typeof(List<ResponseGetTodo>),StatusCodes.Status200OK)]
+        public IActionResult ListV2(){
+            
+            var res = new ResponseGetTodo();
+
+            return Ok(res);
         }
     }
 }
