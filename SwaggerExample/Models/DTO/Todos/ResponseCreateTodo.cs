@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SwaggerExample.Models.DAO;
 using SwaggerExample.Models.Enums;
 
 namespace SwaggerExample.Models.DTO.Todos
@@ -12,9 +13,9 @@ namespace SwaggerExample.Models.DTO.Todos
         {
         }
 
-        public ResponseCreateTodo(RequestCreateTodo req)
+        public ResponseCreateTodo(Todo req)
         {
-            Id = Guid.NewGuid();
+            Id = req.Id;
             Title = req.Title;
             Content = req.Content;
             CreatedAt = DateTime.Now;

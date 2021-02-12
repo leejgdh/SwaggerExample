@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SwaggerExample.Interfaces;
 using SwaggerExample.Models.DTO;
 using SwaggerExample.Models.DTO.Todos;
+using SwaggerExample.Services;
 
 namespace SwaggerExample.Controllers
 {
@@ -19,7 +22,15 @@ namespace SwaggerExample.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public class TodosController : ControllerBase
-    {
+    {  
+        private readonly ITodoService _todoService;
+
+        public TodosController(
+            ITodoService todoService
+            )
+        {
+            _todoService = todoService;
+        }
 
         /// <summary>
         /// 하나의 Todo항목을 가져옵니다.
@@ -36,7 +47,7 @@ namespace SwaggerExample.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Get([FromHeader] Sign header, [FromRoute] Guid Id)
         {
-
+            
             var res = new ResponseGetTodo();
 
             return Ok(res);
@@ -51,9 +62,8 @@ namespace SwaggerExample.Controllers
         [ProducesResponseType(typeof(List<ResponseGetTodo>),StatusCodes.Status200OK)]
         public IActionResult List()
         {
-
-            var res = new List<ResponseGetTodo>();
-
+            var res = _todoService.List();
+            
             return Ok(res);
         }
 
@@ -69,12 +79,12 @@ namespace SwaggerExample.Controllers
         /// <response code="201">정상</response>
         [HttpPost]
         [ProducesResponseType(typeof(ResponseCreateTodo), StatusCodes.Status201Created)]
-        public IActionResult Create([FromBody] RequestCreateTodo req)
+        public async Task<IActionResult> Create([FromBody] RequestCreateTodo req)
         {
-
-            var res = new ResponseCreateTodo(req);
-
-            return CreatedAtRoute("", new { res.Id }, res);
+            var result = await _todoService.CreateAsync(new CreateTodo(req.Title,req.Content, req.Status));
+            
+            var res = new ResponseCreateTodo(result);
+            return Created(nameof(Update), res);
         }
 
 
@@ -86,12 +96,18 @@ namespace SwaggerExample.Controllers
         /// <response code="202">업데이트 완료</response>
         [HttpPut]
         [ProducesResponseType(typeof(ResponseUpdateTodo),StatusCodes.Status202Accepted)]
-        public IActionResult Update([FromBody] RequestUpdateTodo req)
+        public async Task<IActionResult> Update([FromBody] RequestUpdateTodo req)
         {
 
-            var res = new ResponseUpdateTodo(req);
+            var result =  await _todoService.UpdateAsync(new UpdateTodo(req.Id, req.Title, req.Content, req.Status));
 
-            return AcceptedAtRoute("", new { res.Id }, res);
+            if(result == null){
+                return NotFound("Content not found");
+            }
+
+            var res = new ResponseUpdateTodo(result);
+
+            return Accepted(res);
         }
 
 
@@ -104,8 +120,14 @@ namespace SwaggerExample.Controllers
         /// <response code="404">데이터를 찾을 수 없음</response>
         [HttpPatch("{Id}/Status")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult ChangeStatus([FromBody] RequestChangeTodoStatus req)
+        public async Task<IActionResult> ChangeStatus([FromBody] RequestChangeTodoStatus req)
         {
+
+            var result = await _todoService.ChangeStatusAsync(req.Id, req.Status);
+
+            if(result == null){
+                return NotFound("Content not found");
+            }
 
             return NoContent();
         }
@@ -122,6 +144,11 @@ namespace SwaggerExample.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult Delete([FromRoute] Guid Id)
         {
+            var result = _todoService.DeleteAsync(Id);
+
+            if(result == null){
+                return NotFound("Content not found");
+            }
 
             return NoContent();
         }

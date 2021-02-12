@@ -19,6 +19,9 @@ using SwaggerExample.Helpers;
 using SwaggerExample.Options;
 using SwaggerExample.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using SwaggerExample.Interfaces;
+using SwaggerExample.Models.DAO;
+using Microsoft.EntityFrameworkCore;
 
 namespace SwaggerExample
 {
@@ -44,6 +47,10 @@ namespace SwaggerExample
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            //DbSet
+            services.AddDbContext<DHContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("DH"), x => x.MigrationsAssembly("SwaggerExample")));
+
             services.AddControllers()
             .AddNewtonsoftJson(options =>
             {
@@ -103,9 +110,6 @@ namespace SwaggerExample
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-
-
-
                 c.IncludeXmlComments(xmlPath);
             });
 
@@ -134,6 +138,7 @@ namespace SwaggerExample
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITodoService, TodoService>();
 
         }
 

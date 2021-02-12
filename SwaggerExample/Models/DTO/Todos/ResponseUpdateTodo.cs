@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using SwaggerExample.Models.DAO;
 using SwaggerExample.Models.Enums;
 
 namespace SwaggerExample.Models.DTO.Todos
@@ -12,13 +13,14 @@ namespace SwaggerExample.Models.DTO.Todos
         {
         }
 
-        public ResponseUpdateTodo(RequestUpdateTodo req)
+        public ResponseUpdateTodo(Todo entity)
         {
-            Id = Guid.NewGuid();
-            Title = req.Title;
-            Content = req.Content;
-            CreatedAt = DateTime.Now;
-            UpdatedAt = DateTime.Now;
+            Id = entity.Id;
+            Title = entity.Title;
+            Content = entity.Content;
+            Status = entity.Status;
+            CreatedAt = entity.CreatedAt;
+            UpdatedAt = entity.UpdatedAt;
         }
 
 
