@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SwaggerExample.Interfaces;
+using SwaggerExample.Models.DAO;
 using SwaggerExample.Models.DTO;
 using SwaggerExample.Models.DTO.Todos;
-using SwaggerExample.Services;
 
 namespace SwaggerExample.Controllers
 {
@@ -43,14 +43,17 @@ namespace SwaggerExample.Controllers
         /// <response code="200">정상</response>
         /// <response code="404">데이터를 찾을 수 없음</response>
         [HttpGet("{Id}")]
-        [ProducesResponseType(typeof(ResponseGetTodo), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(Todo), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult Get([FromHeader] Sign header, [FromRoute] Guid Id)
+        public IActionResult Get([FromRoute] Guid Id)
         {
-            
-            var res = new ResponseGetTodo();
+            var result = _todoService.Get(Id);
 
-            return Ok(res);
+            if(result == null){
+                return NotFound("Content not found");
+            }
+
+            return Ok(result);
         }
 
         /// <summary>
@@ -59,7 +62,7 @@ namespace SwaggerExample.Controllers
         /// <returns></returns>
         /// <response code="200"></response>
         [HttpGet]
-        [ProducesResponseType(typeof(List<ResponseGetTodo>),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<Todo>),StatusCodes.Status200OK)]
         public IActionResult List()
         {
             var res = _todoService.List();
@@ -78,13 +81,12 @@ namespace SwaggerExample.Controllers
         /// <returns></returns>
         /// <response code="201">정상</response>
         [HttpPost]
-        [ProducesResponseType(typeof(ResponseCreateTodo), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(Todo), StatusCodes.Status201Created)]
         public async Task<IActionResult> Create([FromBody] RequestCreateTodo req)
         {
             var result = await _todoService.CreateAsync(new CreateTodo(req.Title,req.Content, req.Status));
             
-            var res = new ResponseCreateTodo(result);
-            return Created(nameof(Update), res);
+            return Created(nameof(Update), result);
         }
 
 
@@ -95,19 +97,17 @@ namespace SwaggerExample.Controllers
         /// <returns></returns>
         /// <response code="202">업데이트 완료</response>
         [HttpPut]
-        [ProducesResponseType(typeof(ResponseUpdateTodo),StatusCodes.Status202Accepted)]
+        [ProducesResponseType(typeof(Todo),StatusCodes.Status202Accepted)]
         public async Task<IActionResult> Update([FromBody] RequestUpdateTodo req)
         {
-
+            
             var result =  await _todoService.UpdateAsync(new UpdateTodo(req.Id, req.Title, req.Content, req.Status));
 
             if(result == null){
                 return NotFound("Content not found");
             }
 
-            var res = new ResponseUpdateTodo(result);
-
-            return Accepted(res);
+            return Accepted(result);
         }
 
 
@@ -154,15 +154,14 @@ namespace SwaggerExample.Controllers
         }
 
 
-
         [HttpGet]
         [ApiVersion("2.0")]
-        [ProducesResponseType(typeof(List<ResponseGetTodo>),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<Todo>),StatusCodes.Status200OK)]
         public IActionResult ListV2(){
             
-            var res = new ResponseGetTodo();
+            var result = _todoService.List();
 
-            return Ok(res);
+            return Ok(result);
         }
     }
 }

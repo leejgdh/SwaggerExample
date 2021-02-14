@@ -74,7 +74,9 @@ namespace SwaggerExample.Services
 
         public Todo Get(Guid Id)
         {
-            Todo entity = _context.Todos.Find(Id);
+            Todo entity = _context.Todos
+            .Where(e => e.DeletedAt == null)
+            .FirstOrDefault(e => e.Id == Id);
             return entity;
         }
 

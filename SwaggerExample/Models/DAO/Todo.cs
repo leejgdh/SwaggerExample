@@ -40,10 +40,16 @@ namespace SwaggerExample.Models.DAO
         public ETodoStatus Status { get; set; }
 
         public DateTime CreatedAt { get; set; }
-
+        
         public DateTime UpdatedAt { get; set; }
 
+        /// <summary>
+        /// JsonIgnore는 Newtonsoft를 사용했을 때는 Swagger에 적용 안됨.
+        /// Text.Json꺼를 써야한다.
+        /// </summary>
+        /// <value></value>
         [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public DateTime? DeletedAt { get; set; }
     }
 }
