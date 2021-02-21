@@ -139,6 +139,7 @@ namespace SwaggerExample
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITodoService, TodoService>();
+            services.AddScoped<IShoppingListService, ShoppingListService>();
 
         }
 

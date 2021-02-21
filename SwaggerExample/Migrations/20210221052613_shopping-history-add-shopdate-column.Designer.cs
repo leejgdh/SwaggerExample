@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SwaggerExample.Models.DAO;
 
 namespace SwaggerExample.Migrations
 {
     [DbContext(typeof(DHContext))]
-    partial class DHContextModelSnapshot : ModelSnapshot
+    [Migration("20210221052613_shopping-history-add-shopdate-column")]
+    partial class shoppinghistoryaddshopdatecolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -37,7 +37,6 @@ namespace SwaggerExample.Controllers
         /// </summary>
         /// <remarks>
         /// </remarks>
-        /// <param name="header">Signature</param>
         /// <param name="Id">Todo 고유값</param>
         /// <returns></returns>
         /// <response code="200">정상</response>

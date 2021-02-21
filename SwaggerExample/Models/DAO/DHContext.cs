@@ -14,6 +14,12 @@ namespace SwaggerExample.Models.DAO
 
         public DbSet<Todo> Todos { get; set; }
 
+        public DbSet<Shop> Shops { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<ShoppingHistory> ShoppingHistories { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +28,20 @@ namespace SwaggerExample.Models.DAO
                 .Property(e => e.Status)
                 .HasConversion(new EnumToStringConverter<ETodoStatus>())
                 .HasMaxLength(20);
+
+
+            modelBuilder.Entity<ShoppingHistory>()
+            .HasOne(e => e.Shop)
+            .WithMany(e => e.ShopHistories)
+            .HasForeignKey(e => e.ShopId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ShoppingHistory>()
+            .HasOne(e => e.Product)
+            .WithMany(e => e.ShopHistories)
+            .HasForeignKey(e => e.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }
