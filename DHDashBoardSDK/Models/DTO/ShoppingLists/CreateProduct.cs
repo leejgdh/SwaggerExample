@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace SwaggerExample.Models.DTO.ShoppingLists{
+namespace DHDashBoardSDK.Models.DTO.ShoppingLists{
 
     public struct CreateProduct{
 

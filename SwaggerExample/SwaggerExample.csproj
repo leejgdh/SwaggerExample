@@ -5,30 +5,36 @@
     <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10"/>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3"/>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4"/>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.9"/>
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.2.0"/>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.2.0"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.12"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.12"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.12"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.12"/>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.9" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="4.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.12" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\"/>
-    <Folder Include="Models\"/>
-    <Folder Include="Models\DTO\"/>
-    <Folder Include="Models\DTO\Todos\"/>
-    <Folder Include="Models\Enums\"/>
-    <Folder Include="Models\DAO\"/>
-    <Folder Include="Options\"/>
-    <Folder Include="Attributes\"/>
-    <Folder Include="Helpers\"/>
-    <Folder Include="Models\DTO\Users\"/>
-    <Folder Include="Services\"/>
+    <Folder Include="Controllers\" />
+    <Folder Include="Models\" />
+    <Folder Include="Models\DAO\" />
+    <Folder Include="Options\" />
+    <Folder Include="Attributes\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Services\" />
+    <Folder Include="Models\DTO\" />
+    <Folder Include="Models\DTO\Users\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoinoneSDK\CoinoneSDK.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\DHDashBoardSDK\DHDashBoardSDK.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>

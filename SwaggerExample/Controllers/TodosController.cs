@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SwaggerExample.Interfaces;
 using SwaggerExample.Models.DAO;
-using SwaggerExample.Models.DTO;
-using SwaggerExample.Models.DTO.Todos;
+using DHDashBoardSDK.Models.DTO;
+using DHDashBoardSDK.Models.DTO.Todos;
 
 namespace SwaggerExample.Controllers
 {

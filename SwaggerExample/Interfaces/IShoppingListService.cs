@@ -2,7 +2,7 @@ using System.Linq;
 using System;
 using System.Threading.Tasks;
 using SwaggerExample.Models.DAO;
-using SwaggerExample.Models.DTO.ShoppingLists;
+using DHDashBoardSDK.Models.DTO.ShoppingLists;
 
 namespace SwaggerExample.Interfaces
 {

@@ -1,11 +1,14 @@
 
 
 using System.ComponentModel.DataAnnotations;
+using System.Net.Http;
+using DHDashBoardSDK.Interfaces;
+using Newtonsoft.Json;
 
-namespace SwaggerExample.Models.DTO.ShoppingLists
+namespace DHDashBoardSDK.Models.DTO.ShoppingLists
 {
 
-    public struct CreateShop
+    public struct CreateShop : IRequestBase
     {
 
         [StringLength(200)]
@@ -24,5 +27,15 @@ namespace SwaggerExample.Models.DTO.ShoppingLists
 
         public double? Lan { get; set; }
 
+        [JsonIgnore]
+        public string EndPoint => "/api/v1/ShoppingLists/Shop";
+
+        [JsonIgnore]
+        public HttpMethod HttpMethod => HttpMethod.Post;
+
+        public string ToPayload()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }

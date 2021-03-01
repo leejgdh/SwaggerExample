@@ -3,8 +3,8 @@ using System.Linq;
 using System;
 using System.Threading.Tasks;
 using SwaggerExample.Models.DAO;
-using SwaggerExample.Models.DTO.Todos;
-using SwaggerExample.Models.Enums;
+using DHDashBoardSDK.Models.DTO.Todos;
+using DHDashBoardSDK.Models.Enums;
 
 namespace SwaggerExample.Interfaces
 {

@@ -1,10 +1,8 @@
 ﻿using System;
 namespace CoinoneSDK.Interfaces
 {
-    public class IPricateRequestBase
+    public interface IPrivateRequestBase
     {
-        public IPricateRequestBase()
-        {
-        }
+        
     }
 }

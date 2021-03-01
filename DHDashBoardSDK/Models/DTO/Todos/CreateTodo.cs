@@ -1,10 +1,10 @@
 using System.Net.Mime;
 using System.ComponentModel.DataAnnotations;
-using SwaggerExample.Models.Enums;
+using DHDashBoardSDK.Models.Enums;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 
-namespace SwaggerExample.Models.DTO.Todos
+namespace DHDashBoardSDK.Models.DTO.Todos
 {
 
     public class CreateTodo

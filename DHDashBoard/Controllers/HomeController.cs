@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DHDashBoard.Models;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using DHDashBoard.Models.ViewModels;
+using DHDashBoardSDK.Clients;
+using DHDashBoardSDK.Models.Enums;
+using DHDashBoardSDK.Models.DTO.ShoppingLists;
 
 namespace DHDashBoard.Controllers
 {
@@ -18,12 +21,28 @@ namespace DHDashBoard.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            
 
-            return View();
+            var client = new ShoppingListClient(new HttpClient(), EApiMode.SANDBOX);
+
+            var res = await client.SendRequest<List<ResponseShops>>(new RequestShops());
+
+            if (res.IsSuccess)
+            {
+                IndexViewModel vm = new IndexViewModel();
+                vm.Shops = res.Result;
+
+                return View(vm);
+            }
+            else
+            {
+                return Error();
+            }
+
+            
         }
+
 
         public IActionResult Privacy()
         {

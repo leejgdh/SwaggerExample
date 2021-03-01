@@ -1,10 +1,10 @@
 using System;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using DHDashBoardSDK.Models.DTO.ShoppingLists;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SwaggerExample.Interfaces;
-using SwaggerExample.Models.DTO.ShoppingLists;
 
 namespace SwaggerExample.Controllers
 {

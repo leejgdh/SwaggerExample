@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SwaggerExample.Models.Enums;
+using DHDashBoardSDK.Models.Enums;
 
 namespace SwaggerExample.Models.DAO
 {

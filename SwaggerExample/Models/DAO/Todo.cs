@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using SwaggerExample.Models.Enums;
+using DHDashBoardSDK.Models.Enums;
 
 namespace SwaggerExample.Models.DAO
 {

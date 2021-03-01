@@ -1,10 +1,17 @@
 ﻿using System;
+using System.Net.Http;
+using Newtonsoft.Json;
+
 namespace DHDashBoardSDK.Interfaces
 {
-    public class IShoppingListRequestBase
+    public interface IRequestBase
     {
-        public IShoppingListRequestBase()
-        {
-        }
+        [JsonIgnore]
+        string EndPoint { get; }
+
+        [JsonIgnore]
+        HttpMethod HttpMethod { get; }
+
+        string ToPayload();
     }
 }

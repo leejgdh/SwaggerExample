@@ -1,10 +1,17 @@
 ﻿using System;
+using System.Net.Http;
+using Newtonsoft.Json;
+
 namespace CoinoneSDK.Interfaces
 {
-    public class IRequestBase
+    public interface IRequestBase
     {
-        public IRequestBase()
-        {
-        }
+        [JsonIgnore]
+        string EndPoint { get; }
+
+        [JsonIgnore]
+        HttpMethod HttpMethod { get; }
+
+        string ToPayload();
     }
 }

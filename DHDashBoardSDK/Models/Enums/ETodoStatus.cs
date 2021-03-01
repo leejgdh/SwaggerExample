@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace SwaggerExample.Models.Enums
+namespace DHDashBoardSDK.Models.Enums
 {
     public enum ETodoStatus
     {

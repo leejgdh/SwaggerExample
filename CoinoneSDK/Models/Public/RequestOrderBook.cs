@@ -1,4 +1,3 @@
-﻿using System;
 using System.Net.Http;
 using CoinoneSDK.Interfaces;
 using CoinoneSDK.Models.Enums;
@@ -6,21 +5,21 @@ using Newtonsoft.Json;
 
 namespace CoinoneSDK.Models.Public
 {
-    public class RequestTickerUTC : IRequestBase
+
+    public class RequestOrderBook : IRequestBase
     {
-        public RequestTickerUTC()
+        public RequestOrderBook()
         {
+
         }
 
-
-        public RequestTickerUTC(ECurrency currency)
+        public RequestOrderBook(ECurrency currency)
         {
             Currency = currency;
         }
 
-
         [JsonIgnore]
-        public string EndPoint => "/ticker_utc";
+        public string EndPoint => "/orderbook";
 
         [JsonIgnore]
         public HttpMethod HttpMethod => HttpMethod.Get;
@@ -32,7 +31,8 @@ namespace CoinoneSDK.Models.Public
 
         public string ToPayload()
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
     }
+
 }

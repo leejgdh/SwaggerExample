@@ -7,7 +7,7 @@ using SwaggerExample.CustomExceptions;
 using SwaggerExample.Helpers;
 using SwaggerExample.Interfaces;
 using SwaggerExample.Models.DAO;
-using SwaggerExample.Models.DTO.ShoppingLists;
+using DHDashBoardSDK.Models.DTO.ShoppingLists;
 
 namespace SwaggerExample.Services
 {

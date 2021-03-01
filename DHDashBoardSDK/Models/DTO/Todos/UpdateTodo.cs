@@ -1,8 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using SwaggerExample.Models.Enums;
+using DHDashBoardSDK.Models.Enums;
 
-namespace SwaggerExample.Models.DTO.Todos
+namespace DHDashBoardSDK.Models.DTO.Todos
 {
 
     public class UpdateTodo : CreateTodo

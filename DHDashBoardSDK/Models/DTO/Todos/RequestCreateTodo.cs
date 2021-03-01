@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SwaggerExample.Models.DTO.Todos
+namespace DHDashBoardSDK.Models.DTO.Todos
 {
     public class RequestCreateTodo : CreateTodo
     {

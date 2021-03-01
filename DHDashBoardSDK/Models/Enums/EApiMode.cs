@@ -1,10 +1,9 @@
 ﻿using System;
 namespace DHDashBoardSDK.Models.Enums
 {
-    public class EApiMode
+    public enum EApiMode
     {
-        public EApiMode()
-        {
-        }
+        SANDBOX,
+        PRODUCTION
     }
 }
