@@ -1,6 +1,7 @@
 ﻿using System;
+using SwaggerExample.Models.DAO;
 
-namespace DHDashBoardSDK.Models.DTO.Users
+namespace SwaggerExample.Models.DTO.Users
 {
     public class ResponseAuthenticate
     {
@@ -8,10 +9,13 @@ namespace DHDashBoardSDK.Models.DTO.Users
         {
         }
 
-        public ResponseAuthenticate(string User, string Token)
+        public ResponseAuthenticate(User user, string token)
         {
-            Username = User;
-            this.Token = Token;
+            Id = user.Id;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            Username = user.Username;
+            Token = token;
         }
 
         public int Id { get; set; }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DHDashBoardSDK.Models.DTO.Users
+namespace SwaggerExample.Models.DTO.Users
 {
     public class RequestAuthenticate
     {
