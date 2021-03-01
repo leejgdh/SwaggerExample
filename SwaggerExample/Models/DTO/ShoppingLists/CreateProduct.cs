@@ -2,12 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SwaggerExample.Models.DTO.ShoppingLists{
 
-    public class CreateProduct{
-
-        public CreateProduct()
-        {
-            
-        }
+    public struct CreateProduct{
 
         [StringLength(200)]
         public string Name { get; set; }

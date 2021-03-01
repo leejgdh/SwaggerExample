@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace SwaggerExample.Models.DTO.ShoppingLists
 {
 
-    public class CreateShop
+    public struct CreateShop
     {
 
         [StringLength(200)]

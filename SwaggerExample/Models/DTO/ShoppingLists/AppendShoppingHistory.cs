@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SwaggerExample.Models.DTO.ShoppingLists{
 
-    public class AppendShoppingHistory{
+    public struct AppendShoppingHistory{
 
         [Required]
         public int Price { get; set; }

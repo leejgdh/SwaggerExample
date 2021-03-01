@@ -37,6 +37,8 @@ namespace SwaggerExample
             }
         }
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -47,6 +49,14 @@ namespace SwaggerExample
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                             builder =>
+                             {
+                                 builder.WithOrigins("http://localhost:3000");
+                             });
+            });
 
             //DbSet
             services.AddDbContext<DHContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("DH"), x => x.MigrationsAssembly("SwaggerExample")));
@@ -76,7 +86,7 @@ namespace SwaggerExample
                     return result;
                 };
             });
-            
+
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -114,23 +124,23 @@ namespace SwaggerExample
             });
 
             //Api Versioning
-            services.AddApiVersioning( c =>
-                {
+            services.AddApiVersioning(c =>
+               {
                     // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
                     c.ReportApiVersions = true;
-                }
+               }
             );
 
             //Api Versioning
-            services.AddVersionedApiExplorer( c => 
-                {
+            services.AddVersionedApiExplorer(c =>
+               {
                     // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
                     // note: the specified format code will format the version as "'v'major[.minor][-status]"
                     c.GroupNameFormat = "'v'VVV";
                     // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
                     // can also be used to control the format of the API version in route templates
                     c.SubstituteApiVersionInUrl = true;
-                }
+               }
             );
 
             // configure strongly typed settings object
@@ -150,6 +160,8 @@ namespace SwaggerExample
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

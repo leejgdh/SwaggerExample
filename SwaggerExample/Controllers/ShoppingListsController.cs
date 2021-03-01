@@ -1,17 +1,13 @@
-using System.Collections.Specialized;
 using System;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SwaggerExample.Helpers;
 using SwaggerExample.Interfaces;
-using SwaggerExample.Models.DAO;
 using SwaggerExample.Models.DTO.ShoppingLists;
 
 namespace SwaggerExample.Controllers
 {
-
     /// <summary>
     /// Todo의 내역을 관리합니다.
     /// </summary>
@@ -40,7 +36,6 @@ namespace SwaggerExample.Controllers
         [HttpGet("Shop")]
         public IActionResult GetShops()
         {
-
             var result = _shoppingListService.GetShops();
             return Ok(result);
         }
@@ -88,7 +83,6 @@ namespace SwaggerExample.Controllers
             {
                 return BadRequest("Shop Id not matched");
             }
-
 
             var result = await _shoppingListService.UpdateShopAsync(req);
 
@@ -196,7 +190,5 @@ namespace SwaggerExample.Controllers
 
             return NoContent();
         }
-        
-
     }
 }

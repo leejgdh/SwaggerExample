@@ -5,16 +5,15 @@ namespace SwaggerExample.Models.DTO.ShoppingLists
 {
 
 
-    public class UpdateProduct : CreateProduct
+    public struct UpdateProduct
     {
-        
-        public UpdateProduct()
-        {
-            
-        }
-
 
         [Key]
         public Guid Id { get; set; }
+
+        [StringLength(200)]
+        public string Name { get; set; }
+        
+        public bool IsFavorite{get; set;}
     }
 }
